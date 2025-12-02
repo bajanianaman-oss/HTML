@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BCA I A - Timetable</title>
+<style>
+  :root{
+    --cell-w: 110px;
+    --day-col-w: 140px;
+    --table-w: calc(var(--day-col-w) + var(--cell-w) * 11);
+    --border: 2px solid #111;
+    --small: 12px;
+  }
+  body{
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+    background:#fff;
+  }
+  .card{
+    max-width: calc(var(--table-w) + 40px);
+    margin: 0 auto;
+    border: 6px solid #fff;
+    box-shadow: 0 0 0 2px #eee inset;
+  }
+  .title{
+    text-align:center;
+    font-size:44px;
+    margin:18px 0;
+    font-weight:500;
+    letter-spacing:2px;
+  }
+  table.timetable{
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    border: var(--border);
+  }
+  table.timetable thead th{
+    border-right: var(--border);
+    border-bottom: var(--border);
+    padding: 8px 4px;
+    text-align:center;
+    vertical-align:middle;
+    background: #fff;
+  }
+  table.timetable th.time-col{
+    width: var(--day-col-w);
+  }
+  table.timetable th.slot{
+    width: var(--cell-w);
+  }
+
+  table.timetable td{
+    border-right: var(--border);
+    border-bottom: var(--border);
+    padding: 8px 6px;
+    height: 80px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height:1.15;
+    word-wrap:break-word;
+  }
+
+  /* last column remove right border */
+  table.timetable tr > *:last-child{
+    border-right: none;
+  }
+
+  /* day name cell */
+  .dayname{
+    width: var(--day-col-w);
+    text-align:center;
+    font-size:72px;
+    font-weight:600;
+    padding:0;
+    /* vertical text like in image */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing:4px;
+  }
+
+  /* small top helper for slot numbers/time */
+  .slot-number{
+    display:block;
+    font-weight:700;
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  .slot-time{
+    display:block;
+    font-size:11px;
+    color:#222;
+  }
+
+  /* center small labels inside cells */
+  .cell-title{ font-weight:700; display:block; text-align:left; }
+  .cell-sub{ font-size:12px; color:#111; display:block; margin-top:6px; text-align:left; }
+
+  /* break cell style */
+  .break{
+    text-align:center;
+    font-weight:700;
+    font-size:14px;
+  }
+
+  /* thin footer text */
+  .footer{
+    font-size:11px;
+    color:#222;
+    padding:8px 10px;
+    text-align:left;
+  }
+
+  /* make some rows taller like image (first row of periods) */
+  .tall td{ height: 98px; }
+
+  /* small helpers like CT03 etc aligned right bottom */
+  .meta{ font-size:11px; color:#333; display:block; margin-top:6px; text-align:right; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="title">BCA I A</div>
+
+  <table class="timetable" role="table" aria-label="BCA I A Timetable">
+    <thead>
+      <tr>
+        <th class="time-col"></th>
+        <!-- 11 slots -->
+        <th class="slot"><span class="slot-number">1</span><span class="slot-time">8:10 - 9:00</span></th>
+        <th class="slot"><span class="slot-number">2</span><span class="slot-time">9:00 - 9:50</span></th>
+        <th class="slot"><span class="slot-number">3</span><span class="slot-time">9:50 - 10:40</span></th>
+        <th class="slot"><span class="slot-number">4</span><span class="slot-time">10:40 - 11:30</span></th>
+        <th class="slot"><span class="slot-number">5</span><span class="slot-time">11:30 - 12:20</span></th>
+        <th class="slot"><span class="slot-number">6</span><span class="slot-time">12:20 - 13:10</span></th>
+        <th class="slot"><span class="slot-number">7</span><span class="slot-time">13:10 - 14:00</span></th>
+        <th class="slot"><span class="slot-number">8</span><span class="slot-time">14:00 - 14:50</span></th>
+        <th class="slot"><span class="slot-number">9</span><span class="slot-time">14:50 - 15:40</span></th>
+        <th class="slot"><span class="slot-number">10</span><span class="slot-time">15:40 - 16:20</span></th>
+        <th class="slot"><span class="slot-number">11</span><span class="slot-time">16:20 - 17:10</span></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- Monday -->
+      <tr class="tall">
+        <td class="dayname" rowspan="1">Mo</td>
+
+        <td></td>
+        <td></td>
+
+        <!-- WT(P) spans col 3-4 visually -> use colspan=2 starting at column 3 -->
+        <td colspan="2">
+          <span class="cell-title">WT(P)</span>
+          <span class="cell-sub">Akanksha_A</span>
+          <span class="meta">CS10</span>
+        </td>
+
+        <!-- Break at slot 5 -->
+        <td>
+          <div class="break">Break</div>
+        </td>
+
+        <!-- Itl&PiC(Th) slot 6 -->
+        <td>
+          <span class="cell-title">Itl&amp;PiC(Th)</span>
+          <span class="cell-sub">Neeraj_N</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- DBMS(Th) slot7 -->
+        <td>
+          <span class="cell-title">DBMS(Th)</span>
+          <span class="cell-sub">Raj_K</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- EoM slot8 -->
+        <td>
+          <span class="cell-title">EoM</span>
+          <span class="cell-sub">Urvashi_S</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <td></td><td></td>
+      </tr>
+
+      <!-- Tuesday -->
+      <tr class="">
+        <td class="dayname">Tu</td>
+
+        <td></td>
+        <!-- DBMS(Th) at slot2 -->
+        <td>
+          <span class="cell-title">DBMS(Th)</span>
+          <span class="cell-sub">Raj_K</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- Itl&PiC(P) spans col3-4 (slot3 & 4) -->
+        <td colspan="2">
+          <span class="cell-title">Itl&amp;PiC(P)</span>
+          <span class="cell-sub">Suhail_J / Neeraj_N</span>
+          <span class="meta">CS22</span>
+        </td>
+
+        <!-- Break -->
+        <td>
+          <div class="break">Break</div>
+        </td>
+
+        <!-- PCE-I-SS slot6 -->
+        <td>
+          <span class="cell-title">PCE-I-SS</span>
+          <span class="cell-sub">Aarti</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- PCE-I-Apptitude slot7 -->
+        <td>
+          <span class="cell-title">PCE-I-Apptitude</span>
+          <span class="cell-sub">(Geetika)</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- EoM slot8 -->
+        <td>
+          <span class="cell-title">EoM</span>
+          <span class="cell-sub">Urvashi_S</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <td></td><td></td>
+      </tr>
+
+      <!-- Wednesday -->
+      <tr class="">
+        <td class="dayname">We</td>
+
+        <td></td>
+        <!-- Itl&PiC(P) slot2 -->
+        <td>
+          <span class="cell-title">Itl&amp;PiC(P)</span>
+          <span class="cell-sub">Ritu_S / Priya_T</span>
+          <span class="meta">A1, A2 / CS22</span>
+        </td>
+
+        <!-- Itl&PiC(P) slot3 -->
+        <td>
+          <span class="cell-title">Itl&amp;PiC(P)</span>
+          <span class="cell-sub">Ritu_S / Priya_T</span>
+          <span class="meta">A1, A2 / CS22</span>
+        </td>
+
+        <!-- EoM slot4 -->
+        <td>
+          <span class="cell-title">EoM</span>
+          <span class="cell-sub">Urvashi_S</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- Break slot5 -->
+        <td>
+          <div class="break">Break</div>
+        </td>
+
+        <!-- PCE-I-SS slot6 -->
+        <td>
+          <span class="cell-title">PCE-I-SS</span>
+          <span class="cell-sub">Aarti</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <td></td><td></td><td></td><td></td>
+      </tr>
+
+      <!-- Thursday -->
+      <tr class="">
+        <td class="dayname">Th</td>
+
+        <td></td><td></td>
+
+        <!-- WT(Th) at slot3 -->
+        <td>
+          <span class="cell-title">WT(Th)</span>
+          <span class="cell-sub">Akanksha_A</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- EoM slot4 -->
+        <td>
+          <span class="cell-title">EoM</span>
+          <span class="cell-sub">Urvashi_S</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- Break slot5 -->
+        <td>
+          <div class="break">Break</div>
+        </td>
+
+        <!-- Itl&PiC(Th) slot6 -->
+        <td>
+          <span class="cell-title">Itl&amp;PiC(Th)</span>
+          <span class="cell-sub">Neeraj_N</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- IKS slot7 -->
+        <td>
+          <span class="cell-title">IKS</span>
+          <span class="cell-sub">Mansi_S</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- IKS slot8 -->
+        <td>
+          <span class="cell-title">IKS</span>
+          <span class="cell-sub">Mansi_S</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <td></td><td></td>
+      </tr>
+
+      <!-- Friday -->
+      <tr class="">
+        <td class="dayname">Fr</td>
+
+        <td></td>
+
+        <!-- Itl&PiC(Th) slot2 -->
+        <td>
+          <span class="cell-title">Itl&amp;PiC(Th)</span>
+          <span class="cell-sub">Neeraj_N</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- DBMS(P) spans slot3-4 -->
+        <td colspan="2">
+          <span class="cell-title">DBMS(P)</span>
+          <span class="cell-sub">Raj_K</span>
+          <span class="meta">CS02</span>
+        </td>
+
+        <!-- SDG slot5 -->
+        <td>
+          <span class="cell-title">SDG</span>
+          <span class="cell-sub">Aashish_G</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- Break slot6 -->
+        <td>
+          <div class="break">Break</div>
+        </td>
+
+        <!-- PCE-I-Apptitude slot7 -->
+        <td>
+          <span class="cell-title">PCE-I-Apptitude</span>
+          <span class="cell-sub">(Geetika)</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <!-- DBMS(Th) slot8 -->
+        <td>
+          <span class="cell-title">DBMS(Th)</span>
+          <span class="cell-sub">Raj_K</span>
+          <span class="meta">CT03</span>
+        </td>
+
+        <td></td><td></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="footer">Timetable generated: 13-09-2025 &nbsp;&nbsp;&nbsp; aSc Timetables</div>
+</div>
+</body>
+</html>

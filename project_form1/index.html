@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Flight Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-image"></div>
+
+    <div class="booking-container">
+        <form class="booking-form">
+            <h2>Book Your Flight</h2>
+
+            <fieldset class="form-section">
+                <legend>Personal Information</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Flight Details</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="departure-city">Departure City</label>
+                        <input type="text" id="departure-city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination-city">Destination</label>
+                        <input type="text" id="destination-city" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="depart-date">Depart Date</label>
+                        <input type="date" id="depart-date" required>
+                    </div>
+                    <div class="form-group" id="return-date-group">
+                        <label for="return-date">Return Date</label>
+                        <input type="date" id="return-date">
+                    </div>
+                </div>
+                <div class="form-group custom-checkbox-group">
+                    <input type="checkbox" id="one-way">
+                    <label for="one-way">One-way trip</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Passengers & Class</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="class">Class</label>
+                        <select id="class">
+                            <option value="economy">Economy</option>
+                            <option value="premium">Premium Economy</option>
+                            <option value="business">Business</option>
+                            <option value="first">First Class</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="seats">Number of Seats</label>
+                        <input type="number" id="seats" min="1" value="1" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Select Your Flight</legend>
+                <div class="flight-options">
+                    <label class="flight-option">
+                        <input type="radio" name="flight" value="fl123" checked>
+                        <div class="flight-info">
+                            <strong>FL 123</strong>
+                            <span>08:30 AM - 10:45 AM</span>
+                            <span>$250</span>
+                        </div>
+                    </label>
+                    <label class="flight-option">
+                        <input type="radio" name="flight" value="fl456">
+                        <div class="flight-info">
+                            <strong>FL 456</strong>
+                            <span>11:15 AM - 01:30 PM</span>
+                            <span>$275</span>
+                        </div>
+                    </label>
+                    <label class="flight-option">
+                        <input type="radio" name="flight" value="fl789">
+                        <div class="flight-info">
+                            <strong>FL 789</strong>
+                            <span>04:00 PM - 06:15 PM</span>
+                            <span>$260</span>
+                        </div>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Additional Services</legend>
+                <div class="services-grid">
+                    <div class="form-group custom-checkbox-group">
+                        <input type="checkbox" id="baggage">
+                        <label for="baggage">Extra Baggage</label>
+                    </div>
+                    <div class="form-group custom-checkbox-group">
+                        <input type="checkbox" id="meals">
+                        <label for="meals">In-Flight Meal</label>
+                    </div>
+                    <div class="form-group custom-checkbox-group">
+                        <input type="checkbox" id="boarding">
+                        <label for="boarding">Priority Boarding</label>
+                    </div>
+                    <div class="form-group custom-checkbox-group">
+                        <input type="checkbox" id="insurance">
+                        <label for="insurance">Travel Insurance</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="submit-btn">Book Now</button>
+        </form>
+    </div>
+
+    <script>
+        // 1. Parallax Scroll for Background
+        const bg = document.querySelector('.background-image');
+        window.addEventListener('scroll', () => {
+            // The 0.3 factor creates the slower-scroll "parallax" effect
+            bg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+        });
+
+        // 2. One-Way Trip Toggle
+        const oneWayCheckbox = document.getElementById('one-way');
+        const returnDateGroup = document.getElementById('return-date-group');
+        const returnDateInput = document.getElementById('return-date');
+
+        oneWayCheckbox.addEventListener('change', () => {
+            if (oneWayCheckbox.checked) {
+                returnDateGroup.style.opacity = '0.5';
+                returnDateInput.disabled = true;
+                returnDateInput.value = ''; // Clear the value
+            } else {
+                returnDateGroup.style.opacity = '1';
+                returnDateInput.disabled = false;
+            }
+        });
+    </script>
+
+</body>
+</html>
